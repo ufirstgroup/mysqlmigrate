@@ -159,9 +159,9 @@ function takeadump()
             then
                 if [ $IGNORE_AUTO_INCREMENT -eq 1 ]
                 then
-                    echo "  $ $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | grep -v \"DEFINER\" | sed \"s/ AUTO_INCREMENT=[0-9]*//g\" | tee -a $FILE | grep --colour=never \"^--...\""
+                    echo "  $ $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | sed -e \"s/\/\*!50017 DEFINER=[^*]*\*\///\" | sed \"s/ AUTO_INCREMENT=[0-9]*//g\" | tee -a $FILE | grep --colour=never \"^--...\""
                 else
-                    echo "  $ $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | grep -v \"DEFINER\" | tee -a $FILE | grep --colour=never \"^--...\""
+                    echo "  $ $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | sed -e \"s/\/\*!50017 DEFINER=[^*]*\*\///\" | tee -a $FILE | grep --colour=never \"^--...\""
                 fi
             else
                 if [ $IGNORE_AUTO_INCREMENT -eq 1 ]
@@ -176,9 +176,9 @@ function takeadump()
             then
                 if [ $IGNORE_AUTO_INCREMENT -eq 1 ]
                 then
-                    $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | grep -v "DEFINER" | sed "s/ AUTO_INCREMENT=[0-9]*//g" | tee -a $FILE | grep --colour=never "^--..."
+                    $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | sed -e "s/\/\*!50017 DEFINER=[^*]*\*\///" | sed "s/ AUTO_INCREMENT=[0-9]*//g" | tee -a $FILE | grep --colour=never "^--..."
                 else
-                    $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | grep -v "DEFINER" | tee -a $FILE | grep --colour=never "^--..."
+                    $mysqldump $MYSQLDUMP_FLAGS $FROM_DB | sed -e "s/\/\*!50017 DEFINER=[^*]*\*\///" | tee -a $FILE | grep --colour=never "^--..."
                 fi
             else
                 if [ $IGNORE_AUTO_INCREMENT -eq 1 ]
